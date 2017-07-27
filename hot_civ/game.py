@@ -1,5 +1,6 @@
 from hot_civ.constants import Player
 from hot_civ.world import World
+from hot_civ.window import Window
 
 
 class Game:
@@ -20,6 +21,11 @@ def main():
     game = Game(Player.red)
     world = World()
 
+    window = Window()
+    window.draw(world)
+
+    while 1:
+        i = 1
 
 if __name__ == "__main__":
     main()
