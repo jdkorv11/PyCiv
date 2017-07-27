@@ -12,7 +12,25 @@ class Window:
         screen_size = self.TILE_WIDTH * GameConstants.worldsize
         self.screen = pygame.display.set_mode([screen_size, screen_size])
 
-        self.ocean_img = pygame.image.load('resource/ocean.gif')
+        self.ocean_images = {
+            (True, True, True, True): pygame.image.load('resource/ocean1111.gif'),
+            (True, True, True, False): pygame.image.load('resource/ocean1110.gif'),
+            (True, True, False, True): pygame.image.load('resource/ocean1101.gif'),
+            (True, True, False, False): pygame.image.load('resource/ocean1100.gif'),
+            (True, False, True, True): pygame.image.load('resource/ocean1011.gif'),
+            (True, False, True, False): pygame.image.load('resource/ocean1010.gif'),
+            (True, False, False, True): pygame.image.load('resource/ocean1001.gif'),
+            (True, False, False, False): pygame.image.load('resource/ocean1000.gif'),
+            (False, True, True, True): pygame.image.load('resource/ocean0111.gif'),
+            (False, True, True, False): pygame.image.load('resource/ocean0110.gif'),
+            (False, True, False, True): pygame.image.load('resource/ocean0101.gif'),
+            (False, True, False, False): pygame.image.load('resource/ocean0100.gif'),
+            (False, False, True, True): pygame.image.load('resource/ocean0011.gif'),
+            (False, False, True, False): pygame.image.load('resource/ocean0010.gif'),
+            (False, False, False, True): pygame.image.load('resource/ocean0001.gif'),
+            (False, False, False, False): pygame.image.load('resource/ocean0000.gif'),
+        }
+
         self.plains_img = pygame.image.load('resource/plains.gif')
         self.mountain_img = pygame.image.load('resource/mountain.gif')
         self.forest_img = pygame.image.load('resource/forest.gif')
@@ -56,7 +74,7 @@ class Window:
             if tile_type == GameConstants.plains:
                 image = self.plains_img
             elif tile_type == GameConstants.oceans:
-                image = self.ocean_img
+                image = self.get_ocean_image(key, tiles)
             elif tile_type == GameConstants.forest:
                 image = self.forest_img
             elif tile_type == GameConstants.hills:
@@ -105,3 +123,15 @@ class Window:
             unit_rect.y = y_offset
 
             self.screen.blit(self.unit_images[unit.type][unit.owner], unit_rect)
+
+    def get_ocean_image(self, key, tiles):
+        row = key[0]
+        column = key[1]
+
+        land_north = False if row == 0 else tiles[(row - 1, column)].type != GameConstants.oceans
+        land_east = False if column == GameConstants.worldsize else tiles[
+                                                                        (row, column + 1)].type != GameConstants.oceans
+        land_south = False if row == GameConstants.worldsize else tiles[(row + 1, column)].type != GameConstants.oceans
+        land_west = False if column == 0 else tiles[(row, column - 1)].type != GameConstants.oceans
+
+        return self.ocean_images.get((land_north, land_east, land_south, land_west))
