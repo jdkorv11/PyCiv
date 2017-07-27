@@ -24,8 +24,8 @@ def main():
     window = Window()
     window.draw(world)
 
-    while 1:
-        i = 1
+    input()
+
 
 if __name__ == "__main__":
     main()

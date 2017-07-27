@@ -22,11 +22,29 @@ class Window:
         self.blue_background = pygame.image.load('resource/blue.gif')
         self.city_img = pygame.image.load('resource/city.gif')
 
+        self.unit_images = {}
+        archers = {Player.red: pygame.image.load('resource/archer_red.gif'),
+                   Player.blue: pygame.image.load('resource/archer_blue.gif'),
+                   Player.yellow: pygame.image.load('resource/archer_yellow.gif'),
+                   Player.green: pygame.image.load('resource/archer_green.gif')}
+        self.unit_images[GameConstants.archer] = archers
+        legions = {Player.red: pygame.image.load('resource/legion_red.gif'),
+                   Player.blue: pygame.image.load('resource/legion_blue.gif'),
+                   Player.yellow: pygame.image.load('resource/legion_yellow.gif'),
+                   Player.green: pygame.image.load('resource/legion_green.gif')}
+        self.unit_images[GameConstants.legion] = legions
+        settlers = {Player.red: pygame.image.load('resource/settler_red.gif'),
+                    Player.blue: pygame.image.load('resource/settler_blue.gif'),
+                    Player.yellow: pygame.image.load('resource/settler_yellow.gif'),
+                    Player.green: pygame.image.load('resource/settler_green.gif')}
+        self.unit_images[GameConstants.settler] = settlers
+
     def draw(self, world):
         self.screen.fill(self.black)
         pygame.display.flip()
         self.draw_tiles(world.tiles)
         self.draw_cities(world.cities)
+        self.draw_units(world.units)
         pygame.display.flip()
 
     def draw_tiles(self, tiles):
@@ -72,3 +90,18 @@ class Window:
                 self.screen.blit(self.blue_background, city_rect)
 
             self.screen.blit(self.city_img, city_rect)
+
+    def draw_units(self, units):
+        for key in units.keys():
+            x_offset = key[1] * self.TILE_WIDTH
+            y_offset = key[0] * self.TILE_WIDTH
+
+            unit = units[key]
+            if unit is None:
+                return
+
+            unit_rect = self.city_img.get_rect()
+            unit_rect.x = x_offset
+            unit_rect.y = y_offset
+
+            self.screen.blit(self.unit_images[unit.type][unit.owner], unit_rect)
