@@ -9,7 +9,7 @@ class Window:
     def __init__(self):
         pygame.init()
 
-        screen_size = self.TILE_WIDTH * GameConstants.worldsize
+        screen_size = self.TILE_WIDTH * GameConstants.world_size
         self.screen = pygame.display.set_mode([screen_size, screen_size])
 
         self.ocean_images = {
@@ -129,9 +129,9 @@ class Window:
         column = key[1]
 
         land_north = False if row == 0 else tiles[(row - 1, column)].type != GameConstants.oceans
-        land_east = False if column == GameConstants.worldsize else tiles[
+        land_east = False if column == GameConstants.world_size else tiles[
                                                                         (row, column + 1)].type != GameConstants.oceans
-        land_south = False if row == GameConstants.worldsize else tiles[(row + 1, column)].type != GameConstants.oceans
+        land_south = False if row == GameConstants.world_size else tiles[(row + 1, column)].type != GameConstants.oceans
         land_west = False if column == 0 else tiles[(row, column - 1)].type != GameConstants.oceans
 
         return self.ocean_images.get((land_north, land_east, land_south, land_west))

@@ -1,6 +1,6 @@
 class GameConstants:
     # world
-    worldsize = 16
+    world_size = 16
 
     # units
     archer = 'archer'

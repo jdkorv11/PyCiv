@@ -3,7 +3,7 @@ import math
 
 
 class World:
-    size = GameConstants.worldsize
+    size = GameConstants.world_size
 
     tiles = {}
     units = {}
