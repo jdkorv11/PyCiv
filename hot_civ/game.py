@@ -1,31 +1,68 @@
 from hot_civ.constants import Player
 from hot_civ.world import World
 from hot_civ.window import Window
+import pygame, sys
 
 
 class Game:
     def __init__(self, initial_player):
         self.current_player = initial_player
+        self.world = World()
+        self.focused_position = None
 
     def get_winner(self):
         return self.current_player
 
     def end_of_turn(self):
+        # age the world
+
+        # check for winner
+
+        # reset the movement count of all units
+        for unit in self.world.units.values():
+            unit.move_count = unit.speed
+        # change the current player
         if self.current_player == Player.red:
             self.current_player = Player.blue
         else:
             self.current_player = Player.red
 
+    def selection_at(self, position):
+        self.focused_position = position
+
+    def action_at(self, position):
+        if self.focused_position is not None:
+            unit = self.world.get_unit(self.focused_position)
+            if unit is not None and unit.owner == self.current_player:
+                self.world.move_unit(self.focused_position, position)
+            self.focused_position = None
+
+
 
 def main():
+    pygame.init()
+
     game = Game(Player.red)
-    world = World()
 
     window = Window()
-    window.draw(world)
 
-    input()
+    while 1:
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONUP:
+                position = window.get_world_position(event.pos)
+                print(position)
+                if position[0] > 10:
+                    game.end_of_turn()
+                if event.button == 1:
+                    game.selection_at(position)
+                if event.button == 3:
+                    game.action_at(position)
+
+        window.draw(game)
 
 if __name__ == "__main__":
     main()

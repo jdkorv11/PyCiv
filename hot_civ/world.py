@@ -15,25 +15,25 @@ class World:
         for row in range(self.size):
             for column in range(self.size):
                 self.tiles[(row, column)] = Tile(GameConstants.plains)
-        self.tiles[(0, 1)] = Tile(GameConstants.hills)
-        self.tiles[(1, 0)] = Tile(GameConstants.oceans)
+        self.tiles[(1, 0)] = Tile(GameConstants.hills)
+        self.tiles[(0, 1)] = Tile(GameConstants.oceans)
         self.tiles[(2, 2)] = Tile(GameConstants.mountains)
 
-        self.units[(2, 0)] = Unit(GameConstants.archer, Player.red)
-        self.units[(3, 2)] = Unit(GameConstants.legion, Player.blue)
-        self.units[(4, 3)] = Unit(GameConstants.settler, Player.red)
+        self.units[(0, 2)] = Unit(GameConstants.archer, Player.red)
+        self.units[(2, 3)] = Unit(GameConstants.legion, Player.blue)
+        self.units[(3, 4)] = Unit(GameConstants.settler, Player.red)
 
         self.cities[(1, 1)] = City(Player.red, 1, 6, None)
-        self.cities[(4, 1)] = City(Player.blue, 1, 6, None)
+        self.cities[(1, 4)] = City(Player.blue, 1, 6, None)
 
     def get_tile(self, position):
-        return self.tiles.get((position.row, position.column))
+        return self.tiles.get(position)
 
     def get_unit(self, position):
-        return self.units.get((position.row, position.column))
+        return self.units.get(position)
 
     def get_city(self, position):
-        return self.cities.get((position.row, position.column))
+        return self.cities.get(position)
 
     def move_unit(self, position_from, position_to):
         # if position to is a valid position
@@ -51,8 +51,7 @@ class World:
         if self.distance(position_from, position_to) > unit.move_count:
             return False
         # move unit and lower unit move_count
-        self.units[(position_from.row, position_from.column)] = None
-        self.units[(position_to.row, position_to.column)] = unit
+        self.units[position_to] = self.units.pop(position_from)
         unit.move_count -= self.distance(position_from, position_to)
 
         return True
@@ -71,7 +70,7 @@ class World:
         return None
 
     def is_valid_position(self, position):
-        return 0 <= position.row < self.size and 0 <= position.column < self.size
+        return 0 <= position[0] < self.size and 0 <= position[1] < self.size
 
     @staticmethod
     def can_be_occupied(tile):
@@ -83,8 +82,8 @@ class World:
 
     @staticmethod
     def distance(position_from, position_to):
-        row_distance = math.fabs(position_from.row - position_to.row)
-        column_distance = math.fabs(position_from.column - position_to.column)
+        row_distance = math.fabs(position_from[0] - position_to[0])
+        column_distance = math.fabs(position_from[1] - position_to[1])
         if row_distance > column_distance:
             return math.trunc(row_distance)
         return math.trunc(column_distance)
@@ -103,38 +102,22 @@ class Tile:
         self.type = type
 
 
-class Position:
-    row = None
-    column = None
-
-    def __init__(self, row, column):
-        self.row = row
-        self.column = column
-
-    def equals(self, object):
-        if object is None:
-            return False
-        if object.row is None or object.column is None:
-            return False
-        return object.row == self.row and object.column == self.column
-
-    def string(self):
-        return 'row: ' + self.row + ', column: ' + self.column
-
-
 class Unit:
     def __init__(self, type, owner):
         self.type = type
         self.owner = owner
         if self.type == GameConstants.archer:
             self.move_count = 1
+            self.speed = 1
             self.defense = 3
             self.attack = 2
         elif self.type == GameConstants.legion:
             self.move_count = 1
+            self.speed = 1
             self.defense = 2
             self.attack = 4
         elif self.type == GameConstants.settler:
             self.move_count = 1
+            self.speed = 1
             self.defense = 3
             self.attack = 0
