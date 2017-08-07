@@ -11,16 +11,23 @@ class Game:
         self.focused_position = None
 
     def get_winner(self):
-        return self.current_player
+        if self.world.age == 0:
+            return Player.red
+        return None
 
     def end_of_turn(self):
         # age the world
+        self.world.age += 100
 
         # check for winner
+        winner = self.get_winner()
+        if winner is not None:
+            print(winner + ' Wins!')
 
         # reset the movement count of all units
         for unit in self.world.units.values():
             unit.move_count = unit.speed
+
         # change the current player
         if self.current_player == Player.red:
             self.current_player = Player.blue
@@ -36,7 +43,6 @@ class Game:
             if unit is not None and unit.owner == self.current_player:
                 self.world.move_unit(self.focused_position, position)
             self.focused_position = None
-
 
 
 def main():
@@ -55,7 +61,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONUP:
                 position = window.get_world_position(event.pos)
                 print(position)
-                if position[0] > 10:
+                if position[0] > 15:
                     game.end_of_turn()
                 if event.button == 1:
                     game.selection_at(position)

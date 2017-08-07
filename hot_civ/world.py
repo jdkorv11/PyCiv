@@ -23,8 +23,10 @@ class World:
         self.units[(2, 3)] = Unit(GameConstants.legion, Player.blue)
         self.units[(3, 4)] = Unit(GameConstants.settler, Player.red)
 
-        self.cities[(1, 1)] = City(Player.red, 1, 6, None)
-        self.cities[(1, 4)] = City(Player.blue, 1, 6, None)
+        self.cities[(1, 1)] = City(Player.red, 1, 6, GameConstants.food_focus)
+        self.cities[(1, 4)] = City(Player.blue, 1, 6, GameConstants.production_focus)
+
+        self.age = -2000
 
     def get_tile(self, position):
         return self.tiles.get(position)

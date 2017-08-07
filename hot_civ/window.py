@@ -19,56 +19,60 @@ class Window:
         self.screen = pygame.display.set_mode([self.BACKGROUND_WIDTH, self.BACKGROUND_HEIGHT])
 
         self.shield_images = {
-            Player.red: pygame.image.load('resource/shield_red.gif'),
-            Player.blue: pygame.image.load('resource/shield_blue.gif')
+            Player.red: pygame.image.load('resource/shield_red.gif').convert(),
+            Player.blue: pygame.image.load('resource/shield_blue.gif').convert()
         }
 
         self.ocean_images = {
-            (True, True, True, True): pygame.image.load('resource/ocean1111.gif'),
-            (True, True, True, False): pygame.image.load('resource/ocean1110.gif'),
-            (True, True, False, True): pygame.image.load('resource/ocean1101.gif'),
-            (True, True, False, False): pygame.image.load('resource/ocean1100.gif'),
-            (True, False, True, True): pygame.image.load('resource/ocean1011.gif'),
-            (True, False, True, False): pygame.image.load('resource/ocean1010.gif'),
-            (True, False, False, True): pygame.image.load('resource/ocean1001.gif'),
-            (True, False, False, False): pygame.image.load('resource/ocean1000.gif'),
-            (False, True, True, True): pygame.image.load('resource/ocean0111.gif'),
-            (False, True, True, False): pygame.image.load('resource/ocean0110.gif'),
-            (False, True, False, True): pygame.image.load('resource/ocean0101.gif'),
-            (False, True, False, False): pygame.image.load('resource/ocean0100.gif'),
-            (False, False, True, True): pygame.image.load('resource/ocean0011.gif'),
-            (False, False, True, False): pygame.image.load('resource/ocean0010.gif'),
-            (False, False, False, True): pygame.image.load('resource/ocean0001.gif'),
-            (False, False, False, False): pygame.image.load('resource/ocean0000.gif'),
+            (True, True, True, True): pygame.image.load('resource/ocean1111.gif').convert(),
+            (True, True, True, False): pygame.image.load('resource/ocean1110.gif').convert(),
+            (True, True, False, True): pygame.image.load('resource/ocean1101.gif').convert(),
+            (True, True, False, False): pygame.image.load('resource/ocean1100.gif').convert(),
+            (True, False, True, True): pygame.image.load('resource/ocean1011.gif').convert(),
+            (True, False, True, False): pygame.image.load('resource/ocean1010.gif').convert(),
+            (True, False, False, True): pygame.image.load('resource/ocean1001.gif').convert(),
+            (True, False, False, False): pygame.image.load('resource/ocean1000.gif').convert(),
+            (False, True, True, True): pygame.image.load('resource/ocean0111.gif').convert(),
+            (False, True, True, False): pygame.image.load('resource/ocean0110.gif').convert(),
+            (False, True, False, True): pygame.image.load('resource/ocean0101.gif').convert(),
+            (False, True, False, False): pygame.image.load('resource/ocean0100.gif').convert(),
+            (False, False, True, True): pygame.image.load('resource/ocean0011.gif').convert(),
+            (False, False, True, False): pygame.image.load('resource/ocean0010.gif').convert(),
+            (False, False, False, True): pygame.image.load('resource/ocean0001.gif').convert(),
+            (False, False, False, False): pygame.image.load('resource/ocean0000.gif').convert(),
         }
 
-        self.plains_img = pygame.image.load('resource/plains.gif')
-        self.mountain_img = pygame.image.load('resource/mountain.gif')
-        self.forest_img = pygame.image.load('resource/forest.gif')
-        self.hills_img = pygame.image.load('resource/hills.gif')
+        self.plains_img = pygame.image.load('resource/plains.gif').convert()
+        self.mountain_img = pygame.image.load('resource/mountain.gif').convert()
+        self.forest_img = pygame.image.load('resource/forest.gif').convert()
+        self.hills_img = pygame.image.load('resource/hills.gif').convert()
 
         self.city_backgrounds = {
-            Player.red:  pygame.image.load('resource/red.gif'),
-            Player.blue:  pygame.image.load('resource/blue.gif')
+            Player.red: pygame.image.load('resource/red.gif').convert(),
+            Player.blue: pygame.image.load('resource/blue.gif').convert()
         }
-        self.city_img = pygame.image.load('resource/city.gif')
+        self.city_img = pygame.image.load('resource/city.gif').convert()
 
         self.unit_images = {}
-        archers = {Player.red: pygame.image.load('resource/archer_red.gif'),
-                   Player.blue: pygame.image.load('resource/archer_blue.gif'),
-                   Player.yellow: pygame.image.load('resource/archer_yellow.gif'),
-                   Player.green: pygame.image.load('resource/archer_green.gif')}
+        archers = {Player.red: pygame.image.load('resource/archer_red.gif').convert(),
+                   Player.blue: pygame.image.load('resource/archer_blue.gif').convert(),
+                   Player.yellow: pygame.image.load('resource/archer_yellow.gif').convert(),
+                   Player.green: pygame.image.load('resource/archer_green.gif').convert()}
         self.unit_images[GameConstants.archer] = archers
-        legions = {Player.red: pygame.image.load('resource/legion_red.gif'),
-                   Player.blue: pygame.image.load('resource/legion_blue.gif'),
-                   Player.yellow: pygame.image.load('resource/legion_yellow.gif'),
-                   Player.green: pygame.image.load('resource/legion_green.gif')}
+        legions = {Player.red: pygame.image.load('resource/legion_red.gif').convert(),
+                   Player.blue: pygame.image.load('resource/legion_blue.gif').convert(),
+                   Player.yellow: pygame.image.load('resource/legion_yellow.gif').convert(),
+                   Player.green: pygame.image.load('resource/legion_green.gif').convert()}
         self.unit_images[GameConstants.legion] = legions
-        settlers = {Player.red: pygame.image.load('resource/settler_red.gif'),
-                    Player.blue: pygame.image.load('resource/settler_blue.gif'),
-                    Player.yellow: pygame.image.load('resource/settler_yellow.gif'),
-                    Player.green: pygame.image.load('resource/settler_green.gif')}
+        settlers = {Player.red: pygame.image.load('resource/settler_red.gif').convert(),
+                    Player.blue: pygame.image.load('resource/settler_blue.gif').convert(),
+                    Player.yellow: pygame.image.load('resource/settler_yellow.gif').convert(),
+                    Player.green: pygame.image.load('resource/settler_green.gif').convert()}
         self.unit_images[GameConstants.settler] = settlers
+        self.balance_images = {
+            GameConstants.production_focus: pygame.image.load('resource/hammer.gif').convert(),
+            GameConstants.food_focus: pygame.image.load('resource/apple.gif').convert()
+        }
 
     def get_world_position(self, pos):
         row = math.floor((pos[0] - self.BOARDER_LEFT_MARGIN) / self.TILE_WIDTH)
@@ -109,7 +113,11 @@ class Window:
             shield_rect.y = 342
             self.screen.blit(shield_img, shield_rect)
 
-
+            balance_img = self.balance_images[city.work_focus]
+            balance_rect = balance_img.get_rect()
+            balance_rect.x = 582
+            balance_rect.y = 442
+            self.screen.blit(balance_img, balance_rect)
 
     def draw_selected_unit(self, game):
         if game.focused_position is not None and game.world.get_unit(game.focused_position) is not None:
@@ -197,7 +205,7 @@ class Window:
 
         land_north = False if y == 0 else tiles[(y - 1, x)].type != GameConstants.oceans
         land_east = False if x == GameConstants.world_size else tiles[
-                                                                         (y, x + 1)].type != GameConstants.oceans
+                                                                    (y, x + 1)].type != GameConstants.oceans
         land_south = False if y == GameConstants.world_size else tiles[(y + 1, x)].type != GameConstants.oceans
         land_west = False if x == 0 else tiles[(y, x - 1)].type != GameConstants.oceans
 
