@@ -115,9 +115,15 @@ class Window:
 
             balance_img = self.balance_images[city.work_focus]
             balance_rect = balance_img.get_rect()
-            balance_rect.x = 582
-            balance_rect.y = 442
+            balance_rect.x = 587
+            balance_rect.y = 440
             self.screen.blit(balance_img, balance_rect)
+
+            production_img = self.unit_images[city.unit_produced][city.owner]
+            production_rect = production_img.get_rect()
+            production_rect.x = 594
+            production_rect.y = 395
+            self.screen.blit(production_img, production_rect)
 
     def draw_selected_unit(self, game):
         if game.focused_position is not None and game.world.get_unit(game.focused_position) is not None:
