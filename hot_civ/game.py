@@ -28,6 +28,11 @@ class Game:
         for unit in self.world.units.values():
             unit.move_count = unit.speed
 
+        # update all the cities of the player who just completed his turn
+        for city in self.world.cities.values():
+            if city.owner == self.current_player:
+                city.update(self.world)
+
         # change the current player
         if self.current_player == Player.red:
             self.current_player = Player.blue
